@@ -1,0 +1,73 @@
+package com.iFundi.controllers;
+
+import java.util.HashSet;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.iFundi.config.ResourceConfig;
+import com.iFundi.handlers.CustomResponse;
+import com.iFundi.models.Customer;
+import com.iFundi.services.CustomerService;
+
+@Controller
+@RequestMapping(value = ResourceConfig.iFundi_API_v1)
+public class CustomerController {
+
+	@Autowired
+	private Environment env;
+
+	@Autowired
+	private CustomerService customerService;
+
+	@GetMapping(value = "/customers")
+	public ResponseEntity<?> getProfiles() {
+		try {
+			List<Customer> customers = customerService.getAllCustomers();
+
+			if (customers.isEmpty()) {
+				return new ResponseEntity<>(new CustomResponse(CustomResponse.APIV, 200, true, "no customers found",
+						new HashSet<>(customers)), HttpStatus.OK);
+			}
+			return new ResponseEntity<>(
+					new CustomResponse(CustomResponse.APIV, 200, true, "found customers", new HashSet<>(customers)),
+					HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					new CustomResponse(CustomResponse.APIV, 200, false, "Server error processing request"),
+					HttpStatus.OK);
+		}
+	}
+
+	@ResponseBody
+	@PutMapping(value = "/customers/update/{id}")
+	public ResponseEntity<?> updCustomer(@PathVariable(value = "id") Long id, @RequestBody Customer customer) {
+		try {
+			Customer cust = customerService.findById(id);
+			if (cust.equals(null)) {
+				return new ResponseEntity<>(
+						new CustomResponse(CustomResponse.APIV, 200, false, "No customer with specied id"),
+						HttpStatus.OK);
+			}
+
+			customerService.updCustomers(customer);
+			return new ResponseEntity<>(new CustomResponse(CustomResponse.APIV, 200, false, "Failed to update record"),
+					HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					new CustomResponse(CustomResponse.APIV, 200, false, "Server error processing request"),
+					HttpStatus.OK);
+		}
+	}
+
+}
