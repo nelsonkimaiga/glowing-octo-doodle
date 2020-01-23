@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 /**
@@ -13,7 +14,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "CustomerMaster")
+@Table(name = "customer")
 public class Customer extends BaseModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -39,7 +40,11 @@ public class Customer extends BaseModel implements Serializable {
 	@Column(name = "postal_town")
 	private String postalTown;
 
-	@Column(name = "profilePic", columnDefinition = "varchar(max)")
+	@Column(name = "sub_location")
+	private String subLocation;
+
+	@Lob
+	@Column(name = "profilePic")
 	private String profilePic;
 
 	public Customer() {
@@ -51,11 +56,11 @@ public class Customer extends BaseModel implements Serializable {
 	public String toString() {
 		return "Customer [active=" + active + ", dateOfBirth=" + dateOfBirth + ", emailAddress=" + emailAddress
 				+ ", fullName=" + fullName + ", gender=" + gender + ", idNumber=" + idNumber + ", postalTown="
-				+ postalTown + ", profilePic=" + profilePic + "]";
+				+ postalTown + ", profilePic=" + profilePic + ", subLocation= " + subLocation + "]";
 	}
 
 	public Customer(boolean active, String dateOfBirth, String emailAddress, String fullName, String gender,
-			String idNumber, String postalTown, String profilePic) {
+			String idNumber, String postalTown, String profilePic, String subLocation) {
 		super();
 		this.active = active;
 		this.dateOfBirth = dateOfBirth;
@@ -65,6 +70,7 @@ public class Customer extends BaseModel implements Serializable {
 		this.idNumber = idNumber;
 		this.postalTown = postalTown;
 		this.profilePic = profilePic;
+		this.subLocation = subLocation;
 	}
 
 	public boolean isActive() {
@@ -133,6 +139,14 @@ public class Customer extends BaseModel implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getSubLocation() {
+		return subLocation;
+	}
+
+	public void setSubLocation(String subLocation) {
+		this.subLocation = subLocation;
 	}
 
 }

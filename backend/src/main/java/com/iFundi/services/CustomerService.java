@@ -42,4 +42,9 @@ public class CustomerService {
 		return customerRepository.save(customer);
 	}
 
+	public void saveAll(List<Customer> customerslist) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

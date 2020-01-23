@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
-import com.iFundi.config.ResourceConfig;
 import com.iFundi.models.ApiResponse;
 import com.iFundi.models.ApiSecurity;
 import com.iFundi.repositories.ApiKeyRepository;
@@ -29,7 +28,7 @@ import com.iFundi.repositories.ApiKeyRepository;
  * Created by CLLSDJACKT013 on 1/29/2019.
  */
 @RestController
-@RequestMapping(value = ResourceConfig.iFundi_API_v1)
+//@RequestMapping(value = ResourceConfig.iFundi_API_v1)
 public class ApiSecurityController {
 	/*
 	 * @Value("${api.ITERATIONS}") private String ITERATIONS;

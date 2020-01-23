@@ -1,7 +1,6 @@
 package com.iFundi.controllers;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -11,10 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.iFundi.config.ResourceConfig;
 import com.iFundi.handlers.CustomResponse;
 import com.iFundi.handlers.UserResponse;
 import com.iFundi.models.User;
@@ -24,7 +21,6 @@ import com.iFundi.services.SendMail;
 import com.iFundi.services.UserService;
 
 @RestController
-@RequestMapping(value = ResourceConfig.iFundi_API_v1)
 public class UserController {
 	@Autowired
 	private UserService userService;
@@ -156,13 +152,13 @@ public class UserController {
 
 				if (upuser < 0) {
 					return new ResponseEntity<>(new CustomResponse(CustomResponse.APIV, 201, false,
-							"there was problem approving users, kindly retry "), HttpStatus.OK);
+							"there was problem activating users, kindly retry "), HttpStatus.OK);
 				}
 				try {
 					// send email with password to user:
 					User usr = userService.findById(String.valueOf(user.getId()));
 					String message = "Dear " + usr.getFullName()
-							+ ",\nYour Login credentials for BOTC are: \nUsername: " + usr.getUsername()
+							+ ",\nYour Login credentials for iFundi are: \nUsername: " + usr.getUsername()
 							+ "\nPassword: " + AES.decrypt(usr.getPassword());
 
 					SendMail send = new SendMail();
@@ -191,13 +187,48 @@ public class UserController {
 		List<User> users = new ArrayList<>();
 		userService.getUsers().forEach(user -> {
 			try {
-				users.add(new User(user.getEmail(), user.getFirstName(), user.getFullName(),
-						AES.decrypt(user.getPassword()), "", "", "", "", 0, 0, false, "", 0, new Date()));
+				users.add(new User());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		});
 		return ResponseEntity.status(201).body(users);
+	}
+
+	@PostMapping(value = "/users/activateaccounts")
+	public ResponseEntity<?> activateUserAccount(@RequestBody List<User> users) {
+
+		if (users.size() > 0) {
+			for (User user : users) {
+				System.out.println("user id ##" + user.getId());
+				int activateUser = userService.activateAccount((user.getId()));
+
+				if (activateUser < 0) {
+					return new ResponseEntity<>(new CustomResponse(CustomResponse.APIV, 201, false,
+							"there was problem activating users, kindly retry "), HttpStatus.OK);
+				}
+				try {
+					User usr = userService.findById(String.valueOf(user.getId()));
+					String message = "Dear " + usr.getFullName() + ",\nYour Account on iFundi is now active";
+					SendMail send = new SendMail();
+					System.out.println("OTC API Key " + System.getProperty("otcapiKey"));
+					send.InitiateMail("iFundi Account activation", usr.getEmail(), message, "", "email server here",
+							"port nummber", "email username", "email address comes here", "email password here",
+							"false");
+
+				} catch (Exception ex) {
+					return new ResponseEntity<>(
+							new CustomResponse(CustomResponse.APIV, 201, false, "There was an error sending email "),
+							HttpStatus.OK);
+				}
+			}
+
+			return new ResponseEntity<>(
+					new CustomResponse(CustomResponse.APIV, 200, true, "account activated successfully"),
+					HttpStatus.OK);
+		}
+		return new ResponseEntity<>(new CustomResponse(CustomResponse.APIV, 201, false,
+				"There was problem activating users, kindly retry "), HttpStatus.OK);
 	}
 
 }

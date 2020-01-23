@@ -31,8 +31,32 @@ public class JobSeeker extends BaseModel {
 	@Column(name = "postal_town")
 	private String postalTown;
 
-	@Column(name = "profilePic", columnDefinition = "varchar(max)")
-	private String profilePic;
+	@Column(name = "profession_level")
+	private String professionLevel;
+
+	@Column(name = "profession")
+	private String profession;
+
+	@Column(name = "certificate_of_good_conduct", columnDefinition = "LONGTEXT")
+	private String certificate;
+
+	@Column(name = "location")
+	private String location;
+
+	@Column(name = "estimatePrice")
+	private String estimatePrice;
+
+	@Override
+	public String toString() {
+		return "JobSeeker [active=" + active + ", dateOfBirth=" + dateOfBirth + ", emailAddress=" + emailAddress
+				+ ", fullName=" + fullName + ", gender=" + gender + ", idNumber=" + idNumber + ", postalTown="
+				+ postalTown + ", professionLevel=" + professionLevel + ", certificate=" + certificate + ", location="
+				+ location + ", profession=" + profession + ", estimatePrice=" + estimatePrice + "]";
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public JobSeeker() {
 		super();
@@ -95,23 +119,52 @@ public class JobSeeker extends BaseModel {
 		this.postalTown = postalTown;
 	}
 
-	public String getProfilePic() {
-		return profilePic;
+//	public String getProfilePic() {
+//		return certifcate;
+//	}
+//
+//	public void setProfilePic(String profilePic) {
+//		this.certifcate = profilePic;
+//	}
+
+	public String getProfessionLevel() {
+		return professionLevel;
 	}
 
-	public void setProfilePic(String profilePic) {
-		this.profilePic = profilePic;
+	public void setProfessionLevel(String professionLevel) {
+		this.professionLevel = professionLevel;
 	}
 
-	@Override
-	public String toString() {
-		return "JobSeeker [active=" + active + ", dateOfBirth=" + dateOfBirth + ", emailAddress=" + emailAddress
-				+ ", fullName=" + fullName + ", gender=" + gender + ", idNumber=" + idNumber + ", postalTown="
-				+ postalTown + ", profilePic=" + profilePic + "]";
+	public String getCertificate() {
+		return certificate;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public void setCertificate(String certificate) {
+		this.certificate = certificate;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getProfession() {
+		return profession;
+	}
+
+	public void setProfession(String profession) {
+		this.profession = profession;
+	}
+
+	public String getEstimatePrice() {
+		return estimatePrice;
+	}
+
+	public void setEstimatePrice(String estimatePrice) {
+		this.estimatePrice = estimatePrice;
 	}
 
 }

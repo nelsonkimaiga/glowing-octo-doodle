@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
-import com.iFundi.config.ResourceConfig;
 import com.iFundi.handlers.CustomResponse;
 import com.iFundi.models.ApiResponse;
 import com.iFundi.models.JobRequest;
@@ -24,7 +23,7 @@ import com.iFundi.repositories.JobRequestRepository;
 import com.iFundi.services.JobRequestService;
 
 @RestController
-@RequestMapping(value = ResourceConfig.iFundi_API_v1)
+//@RequestMapping(value = ResourceConfig.iFundi_API_v1)
 public class JobRequestController {
 	@Autowired
 	private JobRequestService jobRequestService;

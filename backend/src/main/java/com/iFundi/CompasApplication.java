@@ -13,26 +13,26 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import com.iFundi.config.ResourceConfig;
 
-
 @SpringBootApplication(exclude = SpringDataWebAutoConfiguration.class)
 @EnableAutoConfiguration(exclude = FlywayAutoConfiguration.class)
-@EnableAspectJAutoProxy(proxyTargetClass=true)
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class CompasApplication extends SpringBootServletInitializer {
-	
+
 	@Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(CompasApplication.class).properties(getProperties());
-    } 
-	
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(CompasApplication.class).properties(getProperties());
+	}
+
 	public static void main(String[] args) {
-		System.out.println("catalina base ###"+ResourceConfig.CATALINA_BASE);
+		System.out.println("catalina base ###" + ResourceConfig.CATALINA_BASE);
 		SpringApplication.run(CompasApplication.class, args);
 	}
-	
+
 	static Properties getProperties() {
-	      Properties props = new Properties();
-	      props.put("spring.config.location", ResourceConfig.CATALINA_BASE+"/conf/otc/");
-		   // props.put("spring.config.location", "D:\\Compulynx\\Projects\\prod_pbu_compas_otc_web\\backend\\src\\main\\resources");
-	      return props;
+		Properties props = new Properties();
+		props.put("spring.config.location", ResourceConfig.CATALINA_BASE + "/conf/ifundiDev/");
+		// props.put("spring.config.location",
+		// "D:\\Compulynx\\Projects\\prod_pbu_compas_otc_web\\backend\\src\\main\\resources");
+		return props;
 	}
 }

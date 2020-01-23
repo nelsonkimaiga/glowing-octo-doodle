@@ -19,6 +19,11 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
+	public int activateAccount(Long userId) {
+		// TODO Auto-generated method stub
+		return userRepository.activateAccount(userId);
+	}
+
 	public User authUser(User user) throws Exception {
 		// System.out.println(user.getPassword());
 		System.out.println("User Password####" + user.getPassword());

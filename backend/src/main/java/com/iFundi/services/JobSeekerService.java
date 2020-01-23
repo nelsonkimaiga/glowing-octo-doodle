@@ -24,8 +24,30 @@ public class JobSeekerService {
 		return jobSeekerRepository.findById(id);
 	}
 
+	// new end-points
+	public List<JobSeeker> findByLocation(String location) {
+		// TODO Auto-generated method stub
+		return jobSeekerRepository.findByLocation(location);
+	}
+
+	// find by profession
+	public List<JobSeeker> findByProfession(String profession) {
+		// TODO Auto-generated method stub
+		return jobSeekerRepository.findByProfession(profession);
+	}
+
+	// find by estimate price
+	public List<JobSeeker> findByEstimatePrice(String estimatePrice) {
+		// TODO Auto-generated method stub
+		return jobSeekerRepository.findByEstimatePrice(estimatePrice);
+	}
+
 	public JobSeeker findByIdNumber(String idNumber) {
 		return jobSeekerRepository.findByIdNumber(idNumber);
 	}
 
+	public JobSeeker addContractor(JobSeeker contractor) {
+		// TODO Auto-generated method stub
+		return jobSeekerRepository.save(contractor);
+	}
 }

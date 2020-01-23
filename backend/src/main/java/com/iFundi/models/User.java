@@ -31,6 +31,9 @@ public class User extends BaseModel {
 	@Column(name = "phone")
 	private String phone;
 
+	@Column(name = "location")
+	private String location;
+
 	@Column(name = "surname")
 	private String surName;
 
@@ -64,7 +67,7 @@ public class User extends BaseModel {
 
 	public User(String email, String firstName, String fullName, String password, String phone, String surName,
 			String username, String otherNames, int group, int createdBy, boolean status, String approved,
-			int approvedBy, Date approvedOn) {
+			int approvedBy, Date approvedOn, String location, String userRole) {
 		super();
 		this.email = email;
 		this.firstName = firstName;
@@ -80,6 +83,8 @@ public class User extends BaseModel {
 		this.approved = approved;
 		this.approvedBy = approvedBy;
 		this.approvedOn = approvedOn;
+		this.location = location;
+		this.userRole = userRole;
 	}
 
 	public String getEmail() {
@@ -192,6 +197,14 @@ public class User extends BaseModel {
 
 	public void setApprovedOn(Date approvedOn) {
 		this.approvedOn = approvedOn;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	@Override
