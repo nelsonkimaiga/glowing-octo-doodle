@@ -41,6 +41,11 @@ public class UserService {
 		return userRepository.findByUsername(username);
 	}
 
+	public User findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return userRepository.findByEmail(email);
+	}
+
 	public List<UsersToVerify> getUsersToVerify() {
 		// TODO Auto-generated method stub
 		return userRepository.getUsersToVerify();

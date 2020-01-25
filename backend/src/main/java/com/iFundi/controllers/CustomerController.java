@@ -1,6 +1,5 @@
 package com.iFundi.controllers;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -58,13 +57,13 @@ public class CustomerController {
 
 	@ResponseBody
 	@RequestMapping(path = "/addcustomers", consumes = "application/json", produces = "application/json", method = RequestMethod.POST)
-	public ResponseEntity addAllCustomers(@RequestBody String request) {
+	public ResponseEntity addAllCustomers(@RequestBody Customer customerslist) {
 
 		try {
-			Customer[] customers = gson.fromJson(request, Customer[].class);
+			String customers = gson.toJson(customerslist, Customer[].class);
 			logger.info(gson.toJson(customers, Customer[].class));
-			List<Customer> customerslist = Arrays.asList(customers);
-			customerService.saveAll(customerslist);
+//			Customer customerslist = (Customer) Arrays.asList(customers);
+			customerService.addCustomer(customerslist);
 			return ResponseEntity.status(201).body(gson.toJson(new ApiResponse(true, "customers saved successfully")));
 		} catch (Exception e) {
 			return ResponseEntity.status(201).body(gson.toJson(new ApiResponse(false, "error adding customers")));

@@ -40,12 +40,18 @@ public class JobSeeker extends BaseModel {
 	@Column(name = "estimatePrice")
 	private String estimatePrice;
 
+	@Column(name = "expiry_date")
+	private String expiryDate;
+
+	@Column(name = "isSubmited", nullable = false)
+	private boolean submited = false;
+
 	@Override
 	public String toString() {
 		return "JobSeeker [active=" + active + ", emailAddress=" + emailAddress + ", fullName=" + fullName
 				+ ", idNumber=" + idNumber + ", postalTown=" + postalTown + ", professionLevel=" + professionLevel
 				+ ", certificate=" + certificate + ", location=" + location + ", profession=" + profession
-				+ ", estimatePrice=" + estimatePrice + "]";
+				+ ", estimatePrice=" + estimatePrice + ", expiryDate=" + expiryDate + "]";
 	}
 
 	public static long getSerialversionuid() {
@@ -143,6 +149,22 @@ public class JobSeeker extends BaseModel {
 
 	public void setEstimatePrice(String estimatePrice) {
 		this.estimatePrice = estimatePrice;
+	}
+
+	public String getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	public boolean isSubmited() {
+		return submited;
+	}
+
+	public void setSubmited(boolean submited) {
+		this.submited = submited;
 	}
 
 }

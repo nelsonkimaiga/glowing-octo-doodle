@@ -22,4 +22,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 	@Query("SELECT u from Customer u where u.idNumber=?1")
 	Customer getCustomerByIdNo(String idNumber);
+
 }
