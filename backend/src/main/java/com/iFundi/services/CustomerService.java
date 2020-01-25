@@ -38,8 +38,8 @@ public class CustomerService {
 		return customerRepository.getCustomerByIdNo(idNumber);
 	}
 
-	public Customer updCustomers(Customer customer) {
-		return customerRepository.save(customer);
+	public int updCustomers(Long id) {
+		return customerRepository.updCustomers(id);
 	}
 
 	public Customer addCustomer(Customer customerslist) {

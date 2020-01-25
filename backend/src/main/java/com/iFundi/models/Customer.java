@@ -41,6 +41,9 @@ public class Customer extends BaseModel implements Serializable {
 	@Column(name = "profilePic")
 	private String profilePic;
 
+	@Column(name = "phone_number")
+	private String phoneNumber;
+
 	public Customer() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -50,11 +53,11 @@ public class Customer extends BaseModel implements Serializable {
 	public String toString() {
 		return "Customer [active=" + active + ", emailAddress=" + emailAddress + ", fullName=" + fullName
 				+ ", idNumber=" + idNumber + ", postalTown=" + postalTown + ", profilePic=" + profilePic
-				+ ", subLocation= " + subLocation + "]";
+				+ ", subLocation= " + subLocation + ",  phoneNumber=" + phoneNumber + "]";
 	}
 
 	public Customer(boolean active, String dateOfBirth, String emailAddress, String fullName, String idNumber,
-			String postalTown, String profilePic, String subLocation) {
+			String postalTown, String profilePic, String subLocation, String phoneNumber) {
 		super();
 		this.active = active;
 		this.emailAddress = emailAddress;
@@ -63,6 +66,7 @@ public class Customer extends BaseModel implements Serializable {
 		this.postalTown = postalTown;
 		this.profilePic = profilePic;
 		this.subLocation = subLocation;
+		this.phoneNumber = phoneNumber;
 	}
 
 	public boolean isActive() {
@@ -123,6 +127,14 @@ public class Customer extends BaseModel implements Serializable {
 
 	public void setSubLocation(String subLocation) {
 		this.subLocation = subLocation;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 }

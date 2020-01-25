@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -71,22 +71,22 @@ public class CustomerController {
 	}
 
 	@ResponseBody
-	@PutMapping(value = "/customer/{id}")
+	@PostMapping(value = "/customer/update")
 	public ResponseEntity<?> updCustomer(@PathVariable(value = "id") Long id, @RequestBody Customer customer) {
 		try {
 			Customer cust = customerService.findById(id);
 			if (cust.equals(null)) {
 				return new ResponseEntity<>(
-						new CustomResponse(CustomResponse.APIV, 200, false, "No customer with specied id"),
+						new CustomResponse(CustomResponse.APIV, 201, false, "No customer with specified id"),
 						HttpStatus.OK);
 			}
 
-			customerService.updCustomers(customer);
-			return new ResponseEntity<>(new CustomResponse(CustomResponse.APIV, 200, false, "Failed to find record"),
+			customerService.updCustomers(id);
+			return new ResponseEntity<>(new CustomResponse(CustomResponse.APIV, 200, true, "Updated succesfully"),
 					HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(
-					new CustomResponse(CustomResponse.APIV, 200, false, "Server error processing request"),
+					new CustomResponse(CustomResponse.APIV, 201, false, "Server error processing request"),
 					HttpStatus.OK);
 		}
 	}

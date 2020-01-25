@@ -108,7 +108,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Modifying
 	@Transactional
 	@Query(nativeQuery = true, value = "UPDATE users set status=1 WHERE id=?1")
-	int activateAccount(Long userId);
+	int activateAccount(@Param("id") Long userId);
 
 	@Query(nativeQuery = true, value = "SELECT * FROM users WHERE email=?1 AND password=?1")
 	User findByEmail(String email);

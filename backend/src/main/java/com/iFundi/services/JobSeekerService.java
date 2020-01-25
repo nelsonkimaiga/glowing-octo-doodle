@@ -1,7 +1,6 @@
 package com.iFundi.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +18,10 @@ public class JobSeekerService {
 		return jobSeekerRepository.findAll();
 	}
 
-	public Optional<JobSeeker> findById(Long id) {
-		// TODO Auto-generated method stub
-		return jobSeekerRepository.findById(id);
-	}
+//	public JobSeeker findById(Long id) {
+//		// TODO Auto-generated method stub
+//		return jobSeekerRepository.findById(id);
+//	}
 
 	// new end-points
 	public List<JobSeeker> findByLocation(String location) {
@@ -50,4 +49,9 @@ public class JobSeekerService {
 		// TODO Auto-generated method stub
 		return jobSeekerRepository.save(contractor);
 	}
+
+	public int updContractor(Long id) {
+		return jobSeekerRepository.updContractor(id);
+	}
+
 }

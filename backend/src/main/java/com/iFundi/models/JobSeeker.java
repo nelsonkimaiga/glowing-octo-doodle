@@ -51,13 +51,16 @@ public class JobSeeker extends BaseModel {
 	@Column
 	private byte[] profilePic;
 
+	@Column(name = "phone_number")
+	private String phoneNumber;
+
 	@Override
 	public String toString() {
 		return "JobSeeker [active=" + active + ", emailAddress=" + emailAddress + ", fullName=" + fullName
 				+ ", idNumber=" + idNumber + ", postalTown=" + postalTown + ", professionLevel=" + professionLevel
 				+ ", certificate=" + certificate + ", location=" + location + ", profession=" + profession
 				+ ", estimatePrice=" + estimatePrice + ", expiryDate=" + expiryDate + ", profilePic=" + profilePic
-				+ "]";
+				+ ", phoneNumber=" + phoneNumber + "]";
 	}
 
 	public static long getSerialversionuid() {
@@ -179,6 +182,14 @@ public class JobSeeker extends BaseModel {
 
 	public void setProfilePic(byte[] profilePic) {
 		this.profilePic = profilePic;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 }
