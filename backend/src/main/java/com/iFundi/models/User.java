@@ -16,11 +16,10 @@ import javax.persistence.Table;
 @Table(name = "users")
 public class User extends BaseModel {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Column(name = "email")
 	private String email;
-
-	@Column(name = "first_name")
-	private String firstName;
 
 	@Column(name = "fullname")
 	private String fullName;
@@ -34,14 +33,8 @@ public class User extends BaseModel {
 	@Column(name = "location")
 	private String location;
 
-	@Column(name = "surname")
-	private String surName;
-
 	@Column(name = "username", unique = true, nullable = false)
 	private String username;
-
-	@Column(name = "other_names", nullable = true)
-	private String otherNames;
 
 	@Column(name = "user_role")
 	private String userRole;
@@ -65,18 +58,14 @@ public class User extends BaseModel {
 		super();
 	}
 
-	public User(String email, String firstName, String fullName, String password, String phone, String surName,
-			String username, String otherNames, int group, int createdBy, boolean status, String approved,
-			int approvedBy, Date approvedOn, String location, String userRole) {
+	public User(String email, String fullName, String password, String phone, String username, int group, int createdBy,
+			boolean status, String approved, int approvedBy, Date approvedOn, String location, String userRole) {
 		super();
 		this.email = email;
-		this.firstName = firstName;
 		this.fullName = fullName;
 		this.password = password;
 		this.phone = phone;
-		this.surName = surName;
 		this.username = username;
-		this.otherNames = otherNames;
 		this.userRole = userRole;
 		this.createdBy = createdBy;
 		this.status = status;
@@ -93,14 +82,6 @@ public class User extends BaseModel {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
 	}
 
 	public String getFullName() {
@@ -127,28 +108,12 @@ public class User extends BaseModel {
 		this.phone = phone;
 	}
 
-	public String getSurName() {
-		return surName;
-	}
-
-	public void setSurName(String surName) {
-		this.surName = surName;
-	}
-
 	public String getUsername() {
 		return username;
 	}
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public String getOtherNames() {
-		return otherNames;
-	}
-
-	public void setOtherNames(String otherNames) {
-		this.otherNames = otherNames;
 	}
 
 	public String getUserRole() {

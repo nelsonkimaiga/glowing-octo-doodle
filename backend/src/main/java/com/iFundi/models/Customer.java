@@ -22,17 +22,11 @@ public class Customer extends BaseModel implements Serializable {
 	@Column(name = "active")
 	private boolean active = false;
 
-	@Column(name = "dob")
-	private String dateOfBirth;
-
 	@Column(name = "email")
 	private String emailAddress;
 
 	@Column(name = "full_name")
 	private String fullName;
-
-	@Column(name = "gender")
-	private String gender;
 
 	@Column(name = "id_number")
 	private String idNumber;
@@ -54,19 +48,17 @@ public class Customer extends BaseModel implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Customer [active=" + active + ", dateOfBirth=" + dateOfBirth + ", emailAddress=" + emailAddress
-				+ ", fullName=" + fullName + ", gender=" + gender + ", idNumber=" + idNumber + ", postalTown="
-				+ postalTown + ", profilePic=" + profilePic + ", subLocation= " + subLocation + "]";
+		return "Customer [active=" + active + ", emailAddress=" + emailAddress + ", fullName=" + fullName
+				+ ", idNumber=" + idNumber + ", postalTown=" + postalTown + ", profilePic=" + profilePic
+				+ ", subLocation= " + subLocation + "]";
 	}
 
-	public Customer(boolean active, String dateOfBirth, String emailAddress, String fullName, String gender,
-			String idNumber, String postalTown, String profilePic, String subLocation) {
+	public Customer(boolean active, String dateOfBirth, String emailAddress, String fullName, String idNumber,
+			String postalTown, String profilePic, String subLocation) {
 		super();
 		this.active = active;
-		this.dateOfBirth = dateOfBirth;
 		this.emailAddress = emailAddress;
 		this.fullName = fullName;
-		this.gender = gender;
 		this.idNumber = idNumber;
 		this.postalTown = postalTown;
 		this.profilePic = profilePic;
@@ -79,14 +71,6 @@ public class Customer extends BaseModel implements Serializable {
 
 	public void setActive(boolean active) {
 		this.active = active;
-	}
-
-	public String getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
 	}
 
 	public String getEmailAddress() {
@@ -103,14 +87,6 @@ public class Customer extends BaseModel implements Serializable {
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
 	}
 
 	public String getIdNumber() {

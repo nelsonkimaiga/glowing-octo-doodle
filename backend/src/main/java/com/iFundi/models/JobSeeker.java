@@ -13,17 +13,11 @@ public class JobSeeker extends BaseModel {
 	@Column(name = "active")
 	private boolean active = false;
 
-	@Column(name = "dob")
-	private String dateOfBirth;
-
 	@Column(name = "email")
 	private String emailAddress;
 
 	@Column(name = "full_name")
 	private String fullName;
-
-	@Column(name = "gender")
-	private String gender;
 
 	@Column(name = "id_number")
 	private String idNumber;
@@ -48,10 +42,10 @@ public class JobSeeker extends BaseModel {
 
 	@Override
 	public String toString() {
-		return "JobSeeker [active=" + active + ", dateOfBirth=" + dateOfBirth + ", emailAddress=" + emailAddress
-				+ ", fullName=" + fullName + ", gender=" + gender + ", idNumber=" + idNumber + ", postalTown="
-				+ postalTown + ", professionLevel=" + professionLevel + ", certificate=" + certificate + ", location="
-				+ location + ", profession=" + profession + ", estimatePrice=" + estimatePrice + "]";
+		return "JobSeeker [active=" + active + ", emailAddress=" + emailAddress + ", fullName=" + fullName
+				+ ", idNumber=" + idNumber + ", postalTown=" + postalTown + ", professionLevel=" + professionLevel
+				+ ", certificate=" + certificate + ", location=" + location + ", profession=" + profession
+				+ ", estimatePrice=" + estimatePrice + "]";
 	}
 
 	public static long getSerialversionuid() {
@@ -71,14 +65,6 @@ public class JobSeeker extends BaseModel {
 		this.active = active;
 	}
 
-	public String getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
 	public String getEmailAddress() {
 		return emailAddress;
 	}
@@ -93,14 +79,6 @@ public class JobSeeker extends BaseModel {
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
 	}
 
 	public String getIdNumber() {
