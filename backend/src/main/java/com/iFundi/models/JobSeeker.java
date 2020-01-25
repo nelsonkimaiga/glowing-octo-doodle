@@ -2,6 +2,7 @@ package com.iFundi.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -46,12 +47,17 @@ public class JobSeeker extends BaseModel {
 	@Column(name = "isSubmited", nullable = false)
 	private boolean submited = false;
 
+	@Lob
+	@Column
+	private byte[] profilePic;
+
 	@Override
 	public String toString() {
 		return "JobSeeker [active=" + active + ", emailAddress=" + emailAddress + ", fullName=" + fullName
 				+ ", idNumber=" + idNumber + ", postalTown=" + postalTown + ", professionLevel=" + professionLevel
 				+ ", certificate=" + certificate + ", location=" + location + ", profession=" + profession
-				+ ", estimatePrice=" + estimatePrice + ", expiryDate=" + expiryDate + "]";
+				+ ", estimatePrice=" + estimatePrice + ", expiryDate=" + expiryDate + ", profilePic=" + profilePic
+				+ "]";
 	}
 
 	public static long getSerialversionuid() {
@@ -165,6 +171,14 @@ public class JobSeeker extends BaseModel {
 
 	public void setSubmited(boolean submited) {
 		this.submited = submited;
+	}
+
+	public byte[] getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(byte[] profilePic) {
+		this.profilePic = profilePic;
 	}
 
 }
