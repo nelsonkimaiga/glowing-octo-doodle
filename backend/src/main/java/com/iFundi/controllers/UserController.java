@@ -58,21 +58,32 @@ public class UserController {
 
 	@PostMapping(value = "/sysusers/auth")
 	public ResponseEntity<?> authUser(@RequestBody User user) throws Exception {
+		String message = "";
 		User userpro = userService.authUser(user);
 		System.out.println(userpro);
 		if (userpro == null) {
+			message = "Unsuccessful Login attempt with invalid credentials: UserName: " + user.getUsername()
+					+ " and Password: " + user.getPassword();
 			return new ResponseEntity<>(new UserResponse("invalid user credentials", 409, false, UserResponse.APIV),
 					HttpStatus.OK);
-		} else if (!userpro.getApproved().equalsIgnoreCase("V") || userpro.isStatus() == false) {
-			return new ResponseEntity<>(new UserResponse(
-					"user specified is neither verified or active, kindly ensure " + " you verified and actived ", 201,
-					false, UserResponse.APIV), HttpStatus.OK);
+		} else if (userpro.getLogged_in() == 1) {
+			return new ResponseEntity<>(new UserResponse("User is already Logged in", 409, false, UserResponse.APIV),
+					HttpStatus.OK);
 		} else if (userpro != null && userpro.isStatus() != false) {
 			System.out.println("email" + user.getEmail());
+			userService.SetUserLoggedin(userpro.getId());
+//          // sessions
+//          HttpSession session = servReq.getSession(true); // create if not existing
+//          session.setAttribute("authUser", user);
+//          System.out.println("authUser is null: " + (session.getAttribute("authUser") == null) + " username: "
+//                  + ((User) session.getAttribute("authUser")).getFullName());
+			message = "Successful Login to Account with UserName: " + user.getUsername();
 			return new ResponseEntity<>(
 					new UserResponse("successfully authenticated!", 200, true, UserResponse.APIV, userpro),
 					HttpStatus.OK);
 		} else {
+			message = "Unsuccessful Login attempts with invalid credentials: UserName: " + user.getUsername()
+					+ " and Password: " + user.getPassword();
 			return new ResponseEntity<>(new UserResponse("invalid user credentials", 409, false, UserResponse.APIV),
 					HttpStatus.OK);
 		}

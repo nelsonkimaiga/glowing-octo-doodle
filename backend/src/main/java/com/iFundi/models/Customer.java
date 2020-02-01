@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 /**
@@ -37,7 +36,6 @@ public class Customer extends BaseModel implements Serializable {
 	@Column(name = "sub_location")
 	private String subLocation;
 
-	@Lob
 	@Column(name = "profilePic")
 	private String profilePic;
 
@@ -109,14 +107,6 @@ public class Customer extends BaseModel implements Serializable {
 		this.postalTown = postalTown;
 	}
 
-	public String getProfilePic() {
-		return profilePic;
-	}
-
-	public void setProfilePic(String profilePic) {
-		this.profilePic = profilePic;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -135,6 +125,14 @@ public class Customer extends BaseModel implements Serializable {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public String getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(String profilePic) {
+		this.profilePic = profilePic;
 	}
 
 }

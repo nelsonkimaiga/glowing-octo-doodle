@@ -11,16 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.iFundi.handlers.CustomResponse;
-import com.iFundi.models.ApiResponse;
+import com.iFundi.handlers.UserResponse;
 import com.iFundi.models.Customer;
 import com.iFundi.services.CustomerService;
 
@@ -55,38 +51,29 @@ public class CustomerController {
 		}
 	}
 
-	@ResponseBody
-	@RequestMapping(path = "/addcustomers", consumes = "application/json", produces = "application/json", method = RequestMethod.POST)
-	public ResponseEntity addAllCustomers(@RequestBody Customer customerslist) {
-
-		try {
-			String customers = gson.toJson(customerslist, Customer[].class);
-			logger.info(gson.toJson(customers, Customer[].class));
-//			Customer customerslist = (Customer) Arrays.asList(customers);
-			customerService.addCustomer(customerslist);
-			return ResponseEntity.status(201).body(gson.toJson(new ApiResponse(true, "customers saved successfully")));
-		} catch (Exception e) {
-			return ResponseEntity.status(201).body(gson.toJson(new ApiResponse(false, "error adding customers")));
+	@PostMapping(value = "/addcustomers")
+	public ResponseEntity<?> addAllCustomers(@RequestBody Customer customer) throws Exception {
+		Customer customr = customerService.addCustomer(customer);
+		if (customr == null) {
+			return new ResponseEntity<>(new CustomResponse(UserResponse.APIV, 409, false, "failed to add user"),
+					HttpStatus.OK);
 		}
+
+		return new ResponseEntity<>(
+				new CustomResponse(CustomResponse.APIV, 200, true, "Customer records added succesfully"),
+				HttpStatus.OK);
 	}
 
-	@ResponseBody
-	@PostMapping(value = "/customer/update")
-	public ResponseEntity<?> updCustomer(@PathVariable(value = "id") Long id, @RequestBody Customer customer) {
+	@PostMapping(path = "/customer/update")
+	public ResponseEntity<?> updateCustomerDetails(@RequestBody Customer customer) {
+		System.out.println(customer);
 		try {
-			Customer cust = customerService.findById(id);
-			if (cust.equals(null)) {
-				return new ResponseEntity<>(
-						new CustomResponse(CustomResponse.APIV, 201, false, "No customer with specified id"),
-						HttpStatus.OK);
-			}
-
-			customerService.updCustomers(id);
-			return new ResponseEntity<>(new CustomResponse(CustomResponse.APIV, 200, true, "Updated succesfully"),
+			customerService.updateCustomerDetails(customer);
+			return new ResponseEntity<>(
+					new CustomResponse(CustomResponse.APIV, 200, true, "Customer records updated succesfully"),
 					HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(
-					new CustomResponse(CustomResponse.APIV, 201, false, "Server error processing request"),
+			return new ResponseEntity<>(new CustomResponse(UserResponse.APIV, 409, false, "failed to update user"),
 					HttpStatus.OK);
 		}
 	}

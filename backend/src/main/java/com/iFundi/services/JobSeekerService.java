@@ -24,19 +24,19 @@ public class JobSeekerService {
 //	}
 
 	// new end-points
-	public List<JobSeeker> findByLocation(String location) {
+	public JobSeeker findByLocation(String location) {
 		// TODO Auto-generated method stub
 		return jobSeekerRepository.findByLocation(location);
 	}
 
 	// find by profession
-	public List<JobSeeker> findByProfession(String profession) {
+	public JobSeeker findByProfession(String profession) {
 		// TODO Auto-generated method stub
 		return jobSeekerRepository.findByProfession(profession);
 	}
 
 	// find by estimate price
-	public List<JobSeeker> findByEstimatePrice(String estimatePrice) {
+	public JobSeeker findByEstimatePrice(String estimatePrice) {
 		// TODO Auto-generated method stub
 		return jobSeekerRepository.findByEstimatePrice(estimatePrice);
 	}
@@ -50,8 +50,12 @@ public class JobSeekerService {
 		return jobSeekerRepository.save(contractor);
 	}
 
-	public int updContractor(Long id) {
-		return jobSeekerRepository.updContractor(id);
+	public void updContractor(JobSeeker jobseeker) {
+		jobSeekerRepository.updContractor(jobseeker);
+	}
+
+	public void rateContractor(JobSeeker jobseeker) {
+		jobSeekerRepository.rateContractor(jobseeker);
 	}
 
 }

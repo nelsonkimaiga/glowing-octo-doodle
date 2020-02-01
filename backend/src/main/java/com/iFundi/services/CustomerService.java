@@ -38,13 +38,15 @@ public class CustomerService {
 		return customerRepository.getCustomerByIdNo(idNumber);
 	}
 
-	public int updCustomers(Long id) {
-		return customerRepository.updCustomers(id);
+	public void updateCustomerDetails(Customer customer) {
+		customerRepository.updateCustomerDetails(customer.isActive(), customer.getEmailAddress(),
+				customer.getFullName(), customer.getIdNumber(), customer.getPostalTown(), customer.getPhoneNumber(),
+				customer.getSubLocation(), customer.getProfilePic());
 	}
 
-	public Customer addCustomer(Customer customerslist) {
+	public Customer addCustomer(Customer customer) {
 		// TODO Auto-generated method stub
-		return customerRepository.save(customerslist);
+		return customerRepository.save(customer);
 	}
 
 }

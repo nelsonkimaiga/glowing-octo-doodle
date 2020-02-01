@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class User extends BaseModel {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Column(name = "email")
 	private String email;
 
@@ -54,12 +54,16 @@ public class User extends BaseModel {
 	@Column(name = "verified_on")
 	private Date approvedOn;
 
+	@Column(name = "logged_in", columnDefinition = "default '0'")
+	private int logged_in;
+
 	public User() {
 		super();
 	}
 
 	public User(String email, String fullName, String password, String phone, String username, int group, int createdBy,
-			boolean status, String approved, int approvedBy, Date approvedOn, String location, String userRole) {
+			boolean status, String approved, int approvedBy, Date approvedOn, String location, String userRole,
+			int logged_in) {
 		super();
 		this.email = email;
 		this.fullName = fullName;
@@ -74,6 +78,7 @@ public class User extends BaseModel {
 		this.approvedOn = approvedOn;
 		this.location = location;
 		this.userRole = userRole;
+		this.logged_in = logged_in;
 	}
 
 	public String getEmail() {
@@ -172,8 +177,20 @@ public class User extends BaseModel {
 		this.location = location;
 	}
 
+	public int getLogged_in() {
+		return logged_in;
+	}
+
+	public void setLogged_in(int logged_in) {
+		this.logged_in = logged_in;
+	}
+
 	@Override
 	public String toString() {
-		return "User{" + "aproved=" + approved + ", username=" + username + ", active=" + status + '}';
+		return "User [email=" + email + ", fullName=" + fullName + ", password=" + password + ", phone=" + phone
+				+ ", location=" + location + ", username=" + username + ", userRole=" + userRole + ", createdBy="
+				+ createdBy + ", status=" + status + ", approved=" + approved + ", approvedBy=" + approvedBy
+				+ ", approvedOn=" + approvedOn + ", logged_in=" + logged_in + "]";
 	}
+
 }

@@ -29,7 +29,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 	@Modifying
 	@Transactional
-	@Query(value = "UPDATE customer set active= :active, email= :emailAddress, full_name= :fullName, id_number= :idNumber, postal_town= :postalTown, profile_pic= :profilePic, sub_location= :subLocation WHERE id = :id", nativeQuery = true)
-	int updCustomers(@Param("id") Long id);
+	@Query(nativeQuery = true, value = "UPDATE customer set active=?1, email=?2 full_name=?3, id_number=?4, postal_town=?5, profile_pic=?6, sub_location=?7 WHERE id =?8")
+	void updateCustomerDetails(boolean active, String emailAddress, String fullName, String idNumber, String postalTown,
+			String phoneNumber, String subLocation, String profilePic);
 
 }

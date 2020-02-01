@@ -2,7 +2,6 @@ package com.iFundi.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -32,7 +31,7 @@ public class JobSeeker extends BaseModel {
 	@Column(name = "profession")
 	private String profession;
 
-	@Column(name = "certificate_of_good_conduct", columnDefinition = "LONGTEXT")
+	@Column(name = "certificate_of_good_conduct")
 	private String certificate;
 
 	@Column(name = "location")
@@ -47,20 +46,29 @@ public class JobSeeker extends BaseModel {
 	@Column(name = "isSubmited", nullable = false)
 	private boolean submited = false;
 
-	@Lob
-	@Column
-	private byte[] profilePic;
+	@Column(name = "profile_pic")
+	private String profilePic;
 
 	@Column(name = "phone_number")
 	private String phoneNumber;
+
+	@Column(name = "other_skills")
+	public String otherSkills;
+
+	@Column(name = "professional_boards")
+	public String professionalBoards;
+
+	@Column(name = "rating", columnDefinition = "default '1'")
+	public String rating;
 
 	@Override
 	public String toString() {
 		return "JobSeeker [active=" + active + ", emailAddress=" + emailAddress + ", fullName=" + fullName
 				+ ", idNumber=" + idNumber + ", postalTown=" + postalTown + ", professionLevel=" + professionLevel
-				+ ", certificate=" + certificate + ", location=" + location + ", profession=" + profession
-				+ ", estimatePrice=" + estimatePrice + ", expiryDate=" + expiryDate + ", profilePic=" + profilePic
-				+ ", phoneNumber=" + phoneNumber + "]";
+				+ ", profession=" + profession + ", certificate=" + certificate + ", location=" + location
+				+ ", estimatePrice=" + estimatePrice + ", expiryDate=" + expiryDate + ", submited=" + submited
+				+ ", profilePic=" + profilePic + ", phoneNumber=" + phoneNumber + ", otherSkills=" + otherSkills
+				+ ", professionalBoards=" + professionalBoards + ", rating=" + rating + "]";
 	}
 
 	public static long getSerialversionuid() {
@@ -176,20 +184,44 @@ public class JobSeeker extends BaseModel {
 		this.submited = submited;
 	}
 
-	public byte[] getProfilePic() {
-		return profilePic;
-	}
-
-	public void setProfilePic(byte[] profilePic) {
-		this.profilePic = profilePic;
-	}
-
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public String getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(String profilePic) {
+		this.profilePic = profilePic;
+	}
+
+	public String getOtherSkills() {
+		return otherSkills;
+	}
+
+	public void setOtherSkills(String otherSkills) {
+		this.otherSkills = otherSkills;
+	}
+
+	public String getProfessionalBoards() {
+		return professionalBoards;
+	}
+
+	public void setProfessionalBoards(String professionalBoards) {
+		this.professionalBoards = professionalBoards;
+	}
+
+	public String getRating() {
+		return rating;
+	}
+
+	public void setRating(String rating) {
+		this.rating = rating;
 	}
 
 }

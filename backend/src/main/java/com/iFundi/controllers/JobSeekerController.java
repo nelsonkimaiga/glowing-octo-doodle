@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +20,6 @@ import com.google.gson.Gson;
 import com.iFundi.handlers.CustomResponse;
 import com.iFundi.handlers.UserResponse;
 import com.iFundi.models.ApiResponse;
-import com.iFundi.models.ApiSecurity;
 import com.iFundi.models.JobSeeker;
 import com.iFundi.repositories.JobSeekerRepository;
 import com.iFundi.services.JobSeekerService;
@@ -36,20 +34,23 @@ public class JobSeekerController {
 	private Logger logger = LoggerFactory.getLogger(JobSeekerController.class);
 
 	@GetMapping(value = "/jobseekers")
-	public ResponseEntity<?> getJobSeekers() throws Exception {
-		System.out.println("Job Seekers: ####");
+	public ResponseEntity<?> getJobSeekers() {
+		try {
+			System.out.println("Job Seekers: ####");
+			List<JobSeeker> jobseekers = jobSeekerService.getJobSeekers();
 
-		List<JobSeeker> jobseekers = jobSeekerRepository.findAll();
-
-		if (jobseekers.isEmpty()) {
-			return new ResponseEntity<>(new CustomResponse(CustomResponse.APIV, 404, false, "no contractors found"),
+			if (jobseekers.isEmpty()) {
+				return new ResponseEntity<>(new CustomResponse(CustomResponse.APIV, 200, true, "no customers found",
+						new HashSet<>(jobseekers)), HttpStatus.OK);
+			}
+			return new ResponseEntity<>(
+					new CustomResponse(CustomResponse.APIV, 200, true, "found customers", new HashSet<>(jobseekers)),
+					HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					new CustomResponse(CustomResponse.APIV, 200, false, "Server error processing request"),
 					HttpStatus.OK);
 		}
-
-		return new ResponseEntity<>(
-				new CustomResponse(CustomResponse.APIV, 200, true, "found users", new HashSet<>(jobseekers)),
-				HttpStatus.OK);
-
 	}
 
 	@ResponseBody
@@ -86,66 +87,91 @@ public class JobSeekerController {
 	}
 
 	// find jobseeker by location
-	@ResponseBody
-	@RequestMapping(path = "/getContractorByLocation", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-	public ResponseEntity findByLocation(@RequestBody String location) {
-		logger.info("---------------------[FETCH CONTRACTOR BY LOCATION INIT...]-----------------------");
+	@PostMapping(value = "/getContractorByLocation")
+	public ResponseEntity<?> show(@RequestBody JobSeeker jobseeker) {
 		try {
-			JobSeeker jobSeeker = gson.fromJson(location, JobSeeker.class);
-			List<JobSeeker> jobseekerlocation = jobSeekerRepository.findByLocation(location);
-			return ResponseEntity.status(201).body(gson.toJson(new ApiResponse(true, "success",
-					(ApiSecurity) jobSeekerRepository.findByLocation(jobSeeker.getLocation()))));
+			JobSeeker jobseekr = jobSeekerService.findByLocation(jobseeker.getLocation());
+			if (jobseekr != null) {
+				return new ResponseEntity<>(
+						new CustomResponse(CustomResponse.APIV, 200, true, "Contractors by this location found"),
+						HttpStatus.OK);
+			}
+			return new ResponseEntity<>(
+					new CustomResponse(CustomResponse.APIV, 201, false, "no contractor with specified parameter found"),
+					HttpStatus.OK);
 		} catch (Exception e) {
-			logger.info(e.getMessage());
-			return ResponseEntity.status(201).body(gson.toJson(new ApiResponse(false, e.getMessage())));
+			return new ResponseEntity<>(
+					new CustomResponse(CustomResponse.APIV, 200, false, "Server error processing request"),
+					HttpStatus.OK);
 		}
-
 	}
 
 	// find by profession
-	@ResponseBody
-	@RequestMapping(path = "/getContractorByProfession", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-	public ResponseEntity findByProfession(String profession) {
-		logger.info("---------------------[FETCH CONTRACTOR BY PROFESSION INIT...]-----------------------");
+	@PostMapping(value = "/getContractorByProfession")
+	public ResponseEntity<?> showContractors(@RequestBody JobSeeker jobseeker) {
 		try {
-			JobSeeker jobSeeker = gson.fromJson(profession, JobSeeker.class);
-			List<JobSeeker> jobseekerprofession = jobSeekerRepository.findByProfession(profession);
-			return ResponseEntity.status(201).body(gson.toJson(new ApiResponse(true, "success",
-					(ApiSecurity) jobSeekerRepository.findByLocation(jobSeeker.getProfession()))));
+			JobSeeker jobseekr = jobSeekerService.findByProfession(jobseeker.getProfession());
+			if (jobseekr != null) {
+				return new ResponseEntity<>(
+						new CustomResponse(CustomResponse.APIV, 200, true, "Contractors by this profession found"),
+						HttpStatus.OK);
+			}
+			return new ResponseEntity<>(
+					new CustomResponse(CustomResponse.APIV, 201, false, "no contractor with specified parameter found"),
+					HttpStatus.OK);
 		} catch (Exception e) {
-			logger.info(e.getMessage());
-			return ResponseEntity.status(201).body(gson.toJson(new ApiResponse(false, e.getMessage())));
+			return new ResponseEntity<>(
+					new CustomResponse(CustomResponse.APIV, 200, false, "Server error processing request"),
+					HttpStatus.OK);
 		}
-
 	}
 
 	// find by estimate price
-	@ResponseBody
-	@RequestMapping(path = "/getContractorByEstimatePrice", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-	public ResponseEntity findByEstimatePrice(String estimatePrice) {
-		logger.info("---------------------[FETCH CONTRACTOR BY ESTIMATE PRICE INIT...]-----------------------");
+	@PostMapping(value = "/getContractorByPrice")
+	public ResponseEntity<?> display(@RequestBody JobSeeker jobseeker) {
 		try {
-			JobSeeker jobSeekerEstimatePrice = gson.fromJson(estimatePrice, JobSeeker.class);
-			List<JobSeeker> jobseekerestimate = jobSeekerRepository.findByEstimatePrice(estimatePrice);
-			return ResponseEntity.status(201).body(gson.toJson(new ApiResponse(true, "success",
-					(ApiSecurity) jobSeekerRepository.findByLocation(jobSeekerEstimatePrice.getEstimatePrice()))));
+			JobSeeker jobseekr = jobSeekerService.findByProfession(jobseeker.getEstimatePrice());
+			if (jobseekr != null) {
+				return new ResponseEntity<>(
+						new CustomResponse(CustomResponse.APIV, 200, true, "Contractors by this price found"),
+						HttpStatus.OK);
+			}
+			return new ResponseEntity<>(
+					new CustomResponse(CustomResponse.APIV, 201, false, "no contractor with specified parameter found"),
+					HttpStatus.OK);
 		} catch (Exception e) {
-			logger.info(e.getMessage());
-			return ResponseEntity.status(201).body(gson.toJson(new ApiResponse(false, e.getMessage())));
+			return new ResponseEntity<>(
+					new CustomResponse(CustomResponse.APIV, 200, false, "Server error processing request"),
+					HttpStatus.OK);
 		}
-
 	}
 
 	@ResponseBody
 	@PostMapping(value = "/contractor/update")
-	public ResponseEntity<?> updCustomer(@PathVariable(value = "id") Long id, @RequestBody JobSeeker contractor) {
+	public ResponseEntity<?> updateContractorDetails(@RequestBody JobSeeker jobseeker) {
+		System.out.println(jobseeker);
 		try {
-			jobSeekerService.updContractor(id);
-			return new ResponseEntity<>(new CustomResponse(CustomResponse.APIV, 200, true, "Updated succesfully"),
+			jobSeekerService.updContractor(jobseeker);
+			return new ResponseEntity<>(
+					new CustomResponse(CustomResponse.APIV, 200, true, "Contractor records updated succesfully"),
 					HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(
-					new CustomResponse(CustomResponse.APIV, 201, false, "Server error processing request"),
+					new CustomResponse(UserResponse.APIV, 409, false, "failed to update contractor"), HttpStatus.OK);
+		}
+	}
+
+	@ResponseBody
+	@PostMapping(value = "/contractor/rate")
+	public ResponseEntity<?> rateFundi(@RequestBody JobSeeker jobseeker) {
+		System.out.println(jobseeker);
+		try {
+			jobSeekerService.rateContractor(jobseeker);
+			return new ResponseEntity<>(
+					new CustomResponse(CustomResponse.APIV, 200, true, "Contractor rating updated succesfully"),
+					HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new CustomResponse(UserResponse.APIV, 409, false, "failed to rate contractor"),
 					HttpStatus.OK);
 		}
 	}

@@ -17,8 +17,7 @@ import com.iFundi.models.extras.UsersToVerify;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	// @Query("select u from User u where u.username=?1 and u.password=?2 and
-	// u.status=1 and approved='V' ")
+	// @Query("select u from User u where u.username=?1 and u.password=?2")
 	User findByUsernameAndPassword(String username, String password);
 
 	User findByUsername(String username);
