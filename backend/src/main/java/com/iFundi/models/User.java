@@ -54,8 +54,8 @@ public class User extends BaseModel {
 	@Column(name = "verified_on")
 	private Date approvedOn;
 
-	@Column(name = "logged_in", columnDefinition = "default '0'")
-	private int logged_in;
+	@Column(name = "logged_in", columnDefinition = "tinyint")
+	private boolean logged_in = false;
 
 	public User() {
 		super();
@@ -63,7 +63,7 @@ public class User extends BaseModel {
 
 	public User(String email, String fullName, String password, String phone, String username, int group, int createdBy,
 			boolean status, String approved, int approvedBy, Date approvedOn, String location, String userRole,
-			int logged_in) {
+			boolean logged_in) {
 		super();
 		this.email = email;
 		this.fullName = fullName;
@@ -177,12 +177,16 @@ public class User extends BaseModel {
 		this.location = location;
 	}
 
-	public int getLogged_in() {
+	public boolean isLogged_in() {
 		return logged_in;
 	}
 
-	public void setLogged_in(int logged_in) {
+	public void setLogged_in(boolean logged_in) {
 		this.logged_in = logged_in;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override

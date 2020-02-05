@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.iFundi.models.User;
 import com.iFundi.models.extras.UsersToVerify;
 import com.iFundi.repositories.UserRepository;
-import com.iFundi.security.AES;
 
 @Service
 public class UserService {
@@ -28,7 +27,7 @@ public class UserService {
 		// System.out.println(user.getPassword());
 		System.out.println("User Password####" + user.getPassword());
 		System.out.println("User Username####" + user.getUsername());
-		return userRepository.findByUsernameAndPassword(user.getUsername(), AES.encrypt(user.getPassword()));
+		return userRepository.findByUsernameAndPassword(user.getUsername(), (user.getPassword()));
 	}
 
 	public User addUser(User user) {

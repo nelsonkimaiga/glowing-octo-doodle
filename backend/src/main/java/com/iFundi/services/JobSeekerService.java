@@ -58,4 +58,10 @@ public class JobSeekerService {
 		jobSeekerRepository.rateContractor(jobseeker);
 	}
 
+	// saving profile pic
+	public void addProfilePicture(JobSeeker contractor) {
+		// TODO Auto-generated method stub
+		jobSeekerRepository.addProfilePicture(contractor);
+	}
+
 }

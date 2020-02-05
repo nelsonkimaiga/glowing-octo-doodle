@@ -175,4 +175,19 @@ public class JobSeekerController {
 					HttpStatus.OK);
 		}
 	}
+
+	@ResponseBody
+	@PostMapping(value = "/contractor/updatefields")
+	public ResponseEntity<?> updateContractorInfo(@RequestBody JobSeeker contractor) {
+		System.out.println(contractor);
+		try {
+			jobSeekerService.addProfilePicture(contractor);
+			return new ResponseEntity<>(
+					new CustomResponse(CustomResponse.APIV, 200, true, "Contractor fields updated succesfully"),
+					HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					new CustomResponse(UserResponse.APIV, 409, false, "failed to update contractor"), HttpStatus.OK);
+		}
+	}
 }

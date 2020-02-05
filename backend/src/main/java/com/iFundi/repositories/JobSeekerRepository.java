@@ -39,4 +39,9 @@ public interface JobSeekerRepository extends JpaRepository<JobSeeker, Long> {
 	@Query(value = "UPDATE job_seeker set rating=?1 WHERE id=?2", nativeQuery = true)
 	void rateContractor(JobSeeker jobseeker);
 
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE job_seeker set certificate_of_good_conduct=?1, profile_pic= ?2, other_skills=?3, professional_boards=?4 WHERE id =?4", nativeQuery = true)
+	void addProfilePicture(JobSeeker jobseeker);
+
 }

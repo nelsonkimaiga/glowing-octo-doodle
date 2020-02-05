@@ -16,6 +16,7 @@ import com.iFundi.handlers.CustomResponse;
 import com.iFundi.handlers.UserResponse;
 import com.iFundi.models.User;
 import com.iFundi.models.extras.UsersToVerify;
+import com.iFundi.repositories.UserRepository;
 import com.iFundi.security.AES;
 import com.iFundi.services.SendMail;
 import com.iFundi.services.UserService;
@@ -26,6 +27,8 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private SendMail sendMail;
+	@Autowired
+	private UserRepository userRepository;
 
 	public UserController(SendMail sendMail) {
 		// TODO Auto-generated constructor stub
@@ -59,14 +62,14 @@ public class UserController {
 	@PostMapping(value = "/sysusers/auth")
 	public ResponseEntity<?> authUser(@RequestBody User user) throws Exception {
 		String message = "";
-		User userpro = userService.authUser(user);
+		User userpro = userRepository.findByUsernameAndPassword(user.getUsername(), (user.getPassword()));
 		System.out.println(userpro);
 		if (userpro == null) {
 			message = "Unsuccessful Login attempt with invalid credentials: UserName: " + user.getUsername()
 					+ " and Password: " + user.getPassword();
 			return new ResponseEntity<>(new UserResponse("invalid user credentials", 409, false, UserResponse.APIV),
 					HttpStatus.OK);
-		} else if (userpro.getLogged_in() == 1) {
+		} else if (userpro.isLogged_in() == true) {
 			return new ResponseEntity<>(new UserResponse("User is already Logged in", 409, false, UserResponse.APIV),
 					HttpStatus.OK);
 		} else if (userpro != null && userpro.isStatus() != false) {
@@ -96,7 +99,7 @@ public class UserController {
 			return new ResponseEntity<>(new UserResponse(UserResponse.APIV, 203, false, "username already exists!"),
 					HttpStatus.OK);
 		}
-		user.setPassword(AES.encrypt(user.getPassword()));
+		// user.setPassword(AES.encrypt(user.getPassword()));
 		User usr = userService.addUser(user);
 
 		if (usr == null) {
@@ -240,6 +243,22 @@ public class UserController {
 		}
 		return new ResponseEntity<>(new CustomResponse(CustomResponse.APIV, 201, false,
 				"There was problem activating users, kindly retry "), HttpStatus.OK);
+	}
+
+	@PostMapping(value = "/sysusers/changePassword")
+	public ResponseEntity<?> updatePassword(@RequestBody User user) throws Exception {
+
+		int i = userService.updatePassword(user.getUsername(), user.getPassword());
+
+		System.out.println(user.getUsername());
+		System.out.print(user.getPassword());
+
+		if (i > 0) {
+			return new ResponseEntity<>(
+					new CustomResponse(CustomResponse.APIV, 200, true, "Password updated successfully"), HttpStatus.OK);
+		} else
+			return new ResponseEntity<>(new CustomResponse(CustomResponse.APIV, 201, true, "nothing to be updated"),
+					HttpStatus.OK);
 	}
 
 }
