@@ -4,6 +4,9 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -16,7 +19,10 @@ import javax.persistence.Table;
 @Table(name = "users")
 public class User extends BaseModel {
 
-	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "id", updatable = false, nullable = false)
+	private Long id;
 
 	@Column(name = "email")
 	private String email;
@@ -43,7 +49,7 @@ public class User extends BaseModel {
 	private int createdBy;
 
 	@Column(name = "status", columnDefinition = "tinyint")
-	private boolean status = false;
+	private boolean status = true;
 
 	@Column(name = "verified")
 	private String approved;
@@ -61,14 +67,16 @@ public class User extends BaseModel {
 		super();
 	}
 
-	public User(String email, String fullName, String password, String phone, String username, int group, int createdBy,
-			boolean status, String approved, int approvedBy, Date approvedOn, String location, String userRole,
+	public User(Long id, String email, String fullName, String password, String phone, String location, String username,
+			String userRole, int createdBy, boolean status, String approved, int approvedBy, Date approvedOn,
 			boolean logged_in) {
 		super();
+		this.id = id;
 		this.email = email;
 		this.fullName = fullName;
 		this.password = password;
 		this.phone = phone;
+		this.location = location;
 		this.username = username;
 		this.userRole = userRole;
 		this.createdBy = createdBy;
@@ -76,9 +84,17 @@ public class User extends BaseModel {
 		this.approved = approved;
 		this.approvedBy = approvedBy;
 		this.approvedOn = approvedOn;
-		this.location = location;
-		this.userRole = userRole;
 		this.logged_in = logged_in;
+	}
+
+	@Override
+	public Long getId() {
+		return id;
+	}
+
+	@Override
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getEmail() {
@@ -101,7 +117,7 @@ public class User extends BaseModel {
 		return password;
 	}
 
-	public void setPassword(String password) throws Exception {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
@@ -111,6 +127,14 @@ public class User extends BaseModel {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	public String getUsername() {
@@ -169,14 +193,6 @@ public class User extends BaseModel {
 		this.approvedOn = approvedOn;
 	}
 
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
 	public boolean isLogged_in() {
 		return logged_in;
 	}
@@ -185,16 +201,12 @@ public class User extends BaseModel {
 		this.logged_in = logged_in;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	@Override
 	public String toString() {
-		return "User [email=" + email + ", fullName=" + fullName + ", password=" + password + ", phone=" + phone
-				+ ", location=" + location + ", username=" + username + ", userRole=" + userRole + ", createdBy="
-				+ createdBy + ", status=" + status + ", approved=" + approved + ", approvedBy=" + approvedBy
-				+ ", approvedOn=" + approvedOn + ", logged_in=" + logged_in + "]";
+		return "User [id=" + id + ", email=" + email + ", fullName=" + fullName + ", password=" + password + ", phone="
+				+ phone + ", location=" + location + ", username=" + username + ", userRole=" + userRole
+				+ ", createdBy=" + createdBy + ", status=" + status + ", approved=" + approved + ", approvedBy="
+				+ approvedBy + ", approvedOn=" + approvedOn + ", logged_in=" + logged_in + "]";
 	}
 
 }
