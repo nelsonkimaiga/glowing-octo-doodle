@@ -58,7 +58,7 @@ public class JobSeeker extends BaseModel {
 	@Column(name = "professional_boards")
 	public String professionalBoards;
 
-	@Column(name = "rating", columnDefinition = "default '1'")
+	@Column(name = "rating")
 	public String rating;
 
 	@Override

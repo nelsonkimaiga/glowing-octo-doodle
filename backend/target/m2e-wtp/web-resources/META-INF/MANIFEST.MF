@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: nelsonkimaiga
+Build-Jdk: 13.0.2
+Implementation-Title: iFundi
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com.iFundi
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
+ -starter-parent/iFundi
+Created-By: Maven Integration for Eclipse
+

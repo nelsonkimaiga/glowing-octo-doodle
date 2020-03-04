@@ -27,8 +27,10 @@ public interface JobSeekerRepository extends JpaRepository<JobSeeker, Long> {
 
 	@Modifying
 	@Transactional
-	@Query(value = "UPDATE job_seeker set email=?1, full_name=?2, id_number=?3, postal_town=?4, profession_level=?5, estimate_price=?6, location=?7, profession=?8, profile_pic= ?9, other_skills=?10, professional_boards=?11 WHERE id =?12", nativeQuery = true)
+	@Query(value = "UPDATE job_seeker j set j.emailAddress= :emailAddress, j.fullName= :fullName, j.idNumber= :idNumber, j.postalTown= :postalTown, j.professionLevel=?5, estimate_price=?6, location=?7, profession=?8, profile_pic= ?9, other_skills=?10, professional_boards=?11 WHERE id =?12", nativeQuery = true)
 	void updContractor(JobSeeker jobseeker);
+	
+
 
 	@Query("select u from JobSeeker u")
 	@Override
